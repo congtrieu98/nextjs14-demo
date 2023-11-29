@@ -1,9 +1,9 @@
 import MediList from "@/components/media/MediList";
 import NewMediModal from "@/components/media/MediModal";
-import { getMedia } from "@/lib/api/media/queries";
+import { getMedias } from "@/lib/api/media/queries";
 
 export default async function Media() {
-  const { media } = await getMedia();  
+  const { media } = await getMedias();
 
   return (
     <main className="max-w-3xl mx-auto p-5 md:p-0 sm:pt-4">

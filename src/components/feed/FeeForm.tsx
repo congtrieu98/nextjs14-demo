@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Fee, NewFeeParams, insertFeeParams } from "@/lib/db/schema/feed";
@@ -23,7 +24,6 @@ import { useDropzone } from "react-dropzone";
 import { useCallback, useState } from "react";
 import { uploadVercel } from "@/lib/utils";
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import Image from "next/image";
 
 interface FileWithPreview extends File {
   preview?: string;
@@ -95,7 +95,7 @@ const FeeForm = ({
       });
     }
   }, []);
-console.log(files)
+  console.log(files)
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleSubmit = (values: NewFeeParams) => {
@@ -129,39 +129,39 @@ console.log(files)
             {isDragActive ? (
               <p>Drop the files here ...</p>
             ) : (
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <p>Drag drop some files here, or click to select files</p>
             )}
           </div>
           {/* Accepted files */}
-        <h3 className='title text-lg font-semibold text-neutral-600 mt-10 border-b pb-3'>
-          Accepted Files
-        </h3>
-        <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10'>
-          {files.map((file: FileWithPreview) => (
-            <li key={file.name} className='relative h-32 rounded-md shadow-lg'>
-              <img
-                src={file.preview as string}
-                alt={file.name}
-                width={100}
-                height={100}
-                onLoad={() => {
-                  URL.revokeObjectURL(file.preview as string)
-                }}
-                className='h-full w-full object-contain rounded-md'
-              />
-              <button
-                type='button'
-                className='w-7 h-7 border border-secondary-400 bg-secondary-400 rounded-full flex justify-center items-center absolute -top-3 -right-3 hover:bg-white transition-colors'
+          <h3 className='title text-lg font-semibold text-neutral-600 mt-10 border-b pb-3'>
+            Accepted Files
+          </h3>
+          <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10'>
+            {files.map((file: FileWithPreview) => (
+              <li key={file.name} className='relative h-32 rounded-md shadow-lg'>
+                <img
+                  src={file.preview as string}
+                  alt={file.name}
+                  width={100}
+                  height={100}
+                  onLoad={() => {
+                    URL.revokeObjectURL(file.preview as string)
+                  }}
+                  className='h-full w-full object-contain rounded-md'
+                />
+                <button
+                  type='button'
+                  className='w-7 h-7 border border-secondary-400 bg-secondary-400 rounded-full flex justify-center items-center absolute -top-3 -right-3 hover:bg-white transition-colors'
                 // onClick={() => removeFile(file.name)}
-              >
-                <XMarkIcon className='w-5 h-5 fill-white hover:fill-secondary-400 transition-colors' />
-              </button>
-              <p className='mt-2 text-neutral-500 text-[12px] font-medium'>
-                {file.name}
-              </p>
-            </li>
-          ))}
-        </ul>
+                >
+                  <XMarkIcon className='w-5 h-5 fill-white hover:fill-secondary-400 transition-colors' />
+                </button>
+                <p className='mt-2 text-neutral-500 text-[12px] font-medium'>
+                  {file.name}
+                </p>
+              </li>
+            ))}
+          </ul>
 
         </section>
         <Button

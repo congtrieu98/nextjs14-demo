@@ -2,6 +2,7 @@
 import { CompleteFee } from "@/lib/db/schema/feed";
 import { trpc } from "@/lib/trpc/client";
 import FeeModal from "./FeeModal";
+import { Key } from "react";
 
 
 export default function FeeList({ feed }: { feed: CompleteFee[] }) {
@@ -16,7 +17,7 @@ export default function FeeList({ feed }: { feed: CompleteFee[] }) {
 
   return (
     <ul>
-      {f.feed.map((fee) => (
+      {f.feed.map((fee: { id: Key | null | undefined; }) => (
         <Fee fee={fee} key={fee.id} />
       ))}
     </ul>
