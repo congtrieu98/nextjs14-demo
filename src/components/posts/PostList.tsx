@@ -1,8 +1,7 @@
 "use client";
-import { CompletePost } from "@/lib/db/schema/posts";
+import { CompletePost, Post } from "@/lib/db/schema/posts";
 import { trpc } from "@/lib/trpc/client";
 import PostModal from "./PostModal";
-
 
 export default function PostList({ posts }: { posts: CompletePost[] }) {
   const { data: p } = trpc.posts.getPosts.useQuery(undefined, {
@@ -26,10 +25,16 @@ export default function PostList({ posts }: { posts: CompletePost[] }) {
 const Post = ({ post }: { post: CompletePost }) => {
   return (
     <li className="flex justify-between my-2">
-      <div className="w-full">
+      <div className="w-full space-x-6 grid grid-cols-3">
         <div>{post.title}</div>
+        <div className="w-full">
+          <div>{post.slug}</div>
+        </div>
+        <div className="w-full">
+          <div>{post.content}</div>
+        </div>
       </div>
-      <PostModal post={post} />
+      <PostModal post={post as Post} />
     </li>
   );
 };
@@ -47,4 +52,3 @@ const EmptyState = () => {
     </div>
   );
 };
-

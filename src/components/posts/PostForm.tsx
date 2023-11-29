@@ -3,7 +3,6 @@
 import { Post, NewPostParams, insertPostParams } from "@/lib/db/schema/posts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   Form,
   FormControl,
@@ -18,6 +17,11 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import type { PutBlobResult } from '@vercel/blob';
+import { useState, useRef } from 'react';
+import slugify from "slugify";
+
+
 
 const PostForm = ({
   post,
@@ -26,8 +30,10 @@ const PostForm = ({
   post?: Post;
   closeModal: () => void;
 }) => {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const { toast } = useToast();
-  
+
   const editing = !!post?.id;
 
   const router = useRouter();
@@ -40,16 +46,16 @@ const PostForm = ({
     resolver: zodResolver(insertPostParams),
     defaultValues: post ?? {
       title: "",
-     slug: "",
-     content: "",
-     image: ""
+      content: "",
+      slug: "",
+      image: "",
     },
   });
 
   const onSuccess = async (action: "create" | "update" | "delete") => {
     await utils.posts.getPosts.invalidate();
     router.refresh();
-    closeModal();toast({
+    closeModal(); toast({
       title: 'Success',
       description: `Post ${action}d!`,
       variant: "default",
@@ -71,13 +77,44 @@ const PostForm = ({
       onSuccess: () => onSuccess("delete"),
     });
 
-  const handleSubmit = (values: NewPostParams) => {
+  const handleSubmit = async (values: NewPostParams) => {
+
+
+    if (!inputFileRef.current?.files) {
+      throw new Error('No file selected');
+    }
+
+    const file = inputFileRef.current.files[0];
+    const response = await fetch(
+      `/api/posts/upload?filename=${file.name}`,
+      {
+        method: 'POST',
+        body: file,
+      },
+    );
+    const newBlob = (await response.json()) as PutBlobResult;
+    values.image = newBlob.url;
+
+    setBlob(newBlob);
     if (editing) {
       updatePost({ ...values, id: post.id });
     } else {
       createPost(values);
     }
   };
+
+  const handleChangeSlug = (e: any) => {
+    const result = slugify(e.target.value, {
+      replacement: "-",
+      remove: undefined,
+      strict: false,
+      lower: true,
+      trim: true,
+    });
+    form.setValue("slug", result);
+    form.setValue("title", e.target.value);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>
@@ -85,52 +122,58 @@ const PostForm = ({
           control={form.control}
           name="title"
           render={({ field }) => (<FormItem>
-              <FormLabel>Title</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
-
-              <FormMessage />
-            </FormItem>
+            <FormLabel>Title</FormLabel>
+            <FormControl onChange={handleChangeSlug}>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="slug"
           render={({ field }) => (<FormItem>
-              <FormLabel>Slug</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
+            <FormLabel>Slug</FormLabel>
+            <FormControl>
+              <Input {...field} disabled />
+            </FormControl>
 
-              <FormMessage />
-            </FormItem>
+            <FormMessage />
+          </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (<FormItem>
-              <FormLabel>Content</FormLabel>
-                <FormControl>
-            <Input {...field} />
-          </FormControl>
-
-              <FormMessage />
-            </FormItem>
+            <FormLabel>Content</FormLabel>
+            <FormControl>
+              <Input {...field} value={field.value || ''} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="image"
           render={({ field }) => (<FormItem>
-              <FormLabel>Image</FormLabel>
-                <FormControl>
-            <Input {...field} type="file"/>
-          </FormControl>
+            <FormLabel>Image</FormLabel>
+            {editing ? <p>Url image: {post?.image}</p> : ""}
+            <FormControl>
+              <input
+                type={"file"} // Set type to "file" for file input
+                className={
+                  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                }
+                required
+                ref={inputFileRef}
+              />
+            </FormControl>
 
-              <FormMessage />
-            </FormItem>
+            <FormMessage />
+          </FormItem>
           )}
         />
         <Button
