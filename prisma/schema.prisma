@@ -62,6 +62,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  feed          Fee[]
 }
 
 model VerificationToken {
@@ -80,4 +81,20 @@ model Post {
   image   String
   userId  String
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Fee {
+  id       String    @id @default(cuid())
+  content  String
+  image    String
+  createAt DateTime?
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Medi {
+  id     String  @id @default(cuid())
+  url    String?
+  feedId String
+
 }

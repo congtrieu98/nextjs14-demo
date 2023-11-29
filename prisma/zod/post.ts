@@ -5,7 +5,7 @@ export const postSchema = z.object({
   id: z.string(),
   title: z.string(),
   slug: z.string(),
-  content: z.string().min(0),
+  content: z.string().nullish(),
   image: z.string(),
   userId: z.string(),
 })

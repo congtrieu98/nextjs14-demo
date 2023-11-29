@@ -22,9 +22,12 @@ export default async function Navbar() {
   if (session?.user) {
     return (
       <nav className="py-2 flex items-center justify-between transition-all duration-300">
-        <h1 className="font-semibold hover:opacity-75 transition-hover cursor-pointer space-x-2">
-          <Link href="/">Logo</Link>
-          <Link href="/posts">post</Link>
+        <h1 className="font-semibold transition-hover cursor-pointer space-x-2">
+          <Link href="/" className="hover:opacity-75">Logo</Link>
+          <Link href="/posts" className="hover:opacity-75">Post</Link>
+          <Link href="/feed" className="hover:opacity-75">Feed</Link>
+          <Link className="hover:opacity-75" href="https://nextjs14-demo-taupe.vercel.app/">Vercel</Link>
+          <Link className="hover:opacity-75" href="https://github.com/congtrieu98/nextjs14-demo">Github</Link>
         </h1>
         <div className="space-x-2 flex items-center">
           <ModeToggle />
