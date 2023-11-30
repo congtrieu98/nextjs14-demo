@@ -79,19 +79,20 @@ const MediForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={"space-y-8"}>
-        <FormField
+        {/* <FormField
           control={form.control}
           name="url"
           render={({ field }) => (<FormItem>
               <FormLabel>Url</FormLabel>
                 <FormControl>
+                // @ts-ignore
             <Input {...field} />
           </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="feedId"

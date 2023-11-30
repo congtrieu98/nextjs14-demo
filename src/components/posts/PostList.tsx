@@ -1,8 +1,8 @@
 "use client";
-import { CompletePost, Post } from "@/lib/db/schema/posts";
+import { CompletePost } from "@/lib/db/schema/posts";
 import { trpc } from "@/lib/trpc/client";
 import PostModal from "./PostModal";
-import { Key } from "react";
+
 
 export default function PostList({ posts }: { posts: CompletePost[] }) {
   const { data: p } = trpc.posts.getPosts.useQuery(undefined, {
@@ -16,7 +16,7 @@ export default function PostList({ posts }: { posts: CompletePost[] }) {
 
   return (
     <ul>
-      {p.posts.map((post) => (
+      {p.posts.map((post: CompletePost) => (
         <Post post={post} key={post.id} />
       ))}
     </ul>
@@ -35,7 +35,7 @@ const Post = ({ post }: { post: CompletePost }) => {
           <div>{post.content}</div>
         </div>
       </div>
-      <PostModal post={post as Post} />
+      <PostModal post={post} />
     </li>
   );
 };

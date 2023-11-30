@@ -16,7 +16,7 @@ export default function FeeList({ feed }: { feed: CompleteFee[] }) {
 
   return (
     <ul>
-      {f.feed.map((fee) => (
+      {f.feed.map((fee: CompleteFee) => (
         <Fee fee={fee} key={fee.id} />
       ))}
     </ul>

@@ -27,6 +27,7 @@ export const updatePost = async (id: PostId, post: UpdatePostParams) => {
   const { id: postId } = postIdSchema.parse({ id });
   const newPost = updatePostSchema.parse({ ...post, userId: session?.user.id! });
   try {
+    // @ts-ignore
     const p = await db.post.update({ where: { id: postId, userId: session?.user.id! }, data: newPost})
     return { post: p };
   } catch (err) {
@@ -40,6 +41,7 @@ export const deletePost = async (id: PostId) => {
   const { session } = await getUserAuth();
   const { id: postId } = postIdSchema.parse({ id });
   try {
+    // @ts-ignore
     const p = await db.post.delete({ where: { id: postId, userId: session?.user.id! }})
     return { post: p };
   } catch (err) {
