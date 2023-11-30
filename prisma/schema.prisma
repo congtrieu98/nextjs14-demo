@@ -6,7 +6,7 @@ generator client {
 }
 
 generator zod {
-  provider              = "zod-prisma"
+  provider              = "zod-prisma-types"
   output                = "./zod"
   relationModel         = true
   modelCase             = "camelCase"
