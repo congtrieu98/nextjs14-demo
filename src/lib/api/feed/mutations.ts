@@ -11,6 +11,7 @@ import { getUserAuth } from "@/lib/auth/utils";
 
 export const createFee = async (fee: NewFeeParams) => {
   const { session } = await getUserAuth();
+  console.log(fee)
   const newFee = insertFeeSchema.parse({ ...fee, userId: session?.user.id! });
   try {
     // @ts-ignore
