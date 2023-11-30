@@ -8,8 +8,8 @@ export const getMedias = async () => {
 };
 
 export const getMediById = async (id: MediId) => {
-  // @ts-ignore
   const { id: mediId } = mediIdSchema.parse({ id });
+  // @ts-ignore
   const m = await db.medi.findFirst({
     where: { id: mediId }
   });
