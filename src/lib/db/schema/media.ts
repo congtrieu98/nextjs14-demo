@@ -1,6 +1,6 @@
 import { mediSchema } from "@/zodAutoGenSchemas";
 import { z } from "zod";
-import { getMedis } from "@/lib/api/media/queries";
+import { getMedias } from "@/lib/api/media/queries";
 
 
 // Schema for media - used to validate API requests
@@ -24,5 +24,5 @@ export type UpdateMediParams = z.infer<typeof updateMediParams>;
 export type MediId = z.infer<typeof mediIdSchema>["id"];
     
 // this type infers the return from getMedia() - meaning it will include any joins
-export type CompleteMedi = Awaited<ReturnType<typeof getMedis>>["media"][number];
+export type CompleteMedi = Awaited<ReturnType<typeof getMedias>>["media"][number];
 

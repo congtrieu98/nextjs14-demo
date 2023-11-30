@@ -1,4 +1,4 @@
-import { getMediById, getMedis } from "@/lib/api/media/queries";
+import { getMediById, getMedias } from "@/lib/api/media/queries";
 import { publicProcedure, router } from "@/lib/server/trpc";
 import {
   mediIdSchema,
@@ -9,7 +9,7 @@ import { createMedi, deleteMedi, updateMedi } from "@/lib/api/media/mutations";
 
 export const mediaRouter = router({
   getMedia: publicProcedure.query(async () => {
-    return getMedis();
+    return getMedias();
   }),
   getMediById: publicProcedure.input(mediIdSchema).query(async ({ input }) => {
     return getMediById(input.id);

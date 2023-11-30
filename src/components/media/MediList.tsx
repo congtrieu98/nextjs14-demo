@@ -29,7 +29,6 @@ const Medi = ({ medi }: { medi: CompleteMedi }) => {
       <div className="w-full">
         <div>{medi.url}</div>
       </div>
-      // @ts-ignore
       <MediModal medi={medi} />
     </li>
   );

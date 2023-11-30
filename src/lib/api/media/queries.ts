@@ -1,7 +1,7 @@
 import { db } from "@/lib/db/index";
 import { type MediId, mediIdSchema } from "@/lib/db/schema/media";
 
-export const getMedis = async () => {
+export const getMedias = async () => {
   const m = await db.medi.findMany({});
   return { media: m };
 };

@@ -129,7 +129,7 @@ console.log(files)
             {isDragActive ? (
               <p>Drop the files here ...</p>
             ) : (
-              <p>Drag 'n' drop some files here, or click to select files</p>
+              <p>Drag  drop some files here, or click to select files</p>
             )}
           </div>
           {/* Accepted files */}
@@ -139,7 +139,7 @@ console.log(files)
         <ul className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10'>
           {files.map((file: FileWithPreview) => (
             <li key={file.name} className='relative h-32 rounded-md shadow-lg'>
-              <img
+              <Image
                 src={file.preview as string}
                 alt={file.name}
                 width={100}
