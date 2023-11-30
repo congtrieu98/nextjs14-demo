@@ -1,18 +1,18 @@
-import { mediSchema } from "@/zodAutoGenSchemas";
+import { MediSchema } from "@/zodAutoGenSchemas";
 import { z } from "zod";
 import { getMedias } from "@/lib/api/media/queries";
 
 
 // Schema for media - used to validate API requests
-export const insertMediSchema = mediSchema.omit({ id: true });
+export const insertMediSchema = MediSchema.omit({ id: true });
 
-export const insertMediParams = mediSchema.extend({
+export const insertMediParams = MediSchema.extend({
   feedId: z.coerce.string()
 }).omit({
   id: true
 });
 
-export const updateMediSchema = mediSchema;
+export const updateMediSchema = MediSchema;
 
 export const updateMediParams = updateMediSchema.extend({
   feedId: z.coerce.string()

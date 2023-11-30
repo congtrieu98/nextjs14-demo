@@ -1,19 +1,19 @@
-import { feeSchema } from "@/zodAutoGenSchemas";
+import { FeeSchema } from "@/zodAutoGenSchemas";
 import { z } from "zod";
 import { getFees } from "@/lib/api/feed/queries";
 
 
 // Schema for feed - used to validate API requests
-export const insertFeeSchema = feeSchema.omit({ id: true });
+export const insertFeeSchema = FeeSchema.omit({ id: true });
 
-export const insertFeeParams = feeSchema.extend({}).omit({ 
+export const insertFeeParams = FeeSchema.extend({}).omit({
   id: true,
   userId: true
 });
 
-export const updateFeeSchema = feeSchema;
+export const updateFeeSchema = FeeSchema;
 
-export const updateFeeParams = updateFeeSchema.extend({}).omit({ 
+export const updateFeeParams = updateFeeSchema.extend({}).omit({
   userId: true
 });
 
@@ -25,7 +25,7 @@ export type NewFee = z.infer<typeof insertFeeSchema>;
 export type NewFeeParams = z.infer<typeof insertFeeParams>;
 export type UpdateFeeParams = z.infer<typeof updateFeeParams>;
 export type FeeId = z.infer<typeof feeIdSchema>["id"];
-    
+
 // this type infers the return from getFeed() - meaning it will include any joins
 export type CompleteFee = Awaited<ReturnType<typeof getFees>>["feed"][number];
 
