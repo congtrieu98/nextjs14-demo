@@ -23,7 +23,7 @@ export default function FeeModal({
   const closeModal = () => setOpen(false);
   const editing = !!fee?.id;
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog onOpenChange={setOpen} open={open} >
       <DialogTrigger asChild>
       { emptyState ? (
           <Button>

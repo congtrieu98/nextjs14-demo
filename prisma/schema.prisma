@@ -86,9 +86,8 @@ model Post {
 model Fee {
   id       String    @id @default(cuid())
   content  String
-  image    String
-  createAt DateTime?
   userId   String
+  medis    Medi[]
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -96,5 +95,5 @@ model Medi {
   id     String  @id @default(cuid())
   url    String?
   feedId String
-
+  fee    Fee @relation(fields: [feedId], references: [id], onDelete: Cascade)
 }

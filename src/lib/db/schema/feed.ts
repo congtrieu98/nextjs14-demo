@@ -6,18 +6,14 @@ import { getFees } from "@/lib/api/feed/queries";
 // Schema for feed - used to validate API requests
 export const insertFeeSchema = feeSchema.omit({ id: true });
 
-export const insertFeeParams = feeSchema.extend({
-  createAt: z.coerce.date()
-}).omit({ 
+export const insertFeeParams = feeSchema.extend({}).omit({ 
   id: true,
   userId: true
 });
 
 export const updateFeeSchema = feeSchema;
 
-export const updateFeeParams = updateFeeSchema.extend({
-  createAt: z.coerce.date()
-}).omit({ 
+export const updateFeeParams = updateFeeSchema.extend({}).omit({ 
   userId: true
 });
 

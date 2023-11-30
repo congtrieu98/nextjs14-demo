@@ -2,7 +2,6 @@
 import { CompleteMedi } from "@/lib/db/schema/media";
 import { trpc } from "@/lib/trpc/client";
 import MediModal from "./MediModal";
-import { Key } from "react";
 
 
 export default function MediList({ media }: { media: CompleteMedi[] }) {
@@ -17,7 +16,7 @@ export default function MediList({ media }: { media: CompleteMedi[] }) {
 
   return (
     <ul>
-      {m.media.map((medi: { id: Key | null | undefined; }) => (
+      {m.media.map((medi: CompleteMedi) => (
         <Medi medi={medi} key={medi.id} />
       ))}
     </ul>

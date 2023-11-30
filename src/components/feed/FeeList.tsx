@@ -17,7 +17,7 @@ export default function FeeList({ feed }: { feed: CompleteFee[] }) {
 
   return (
     <ul>
-      {f.feed.map((fee: { id: Key | null | undefined; }) => (
+      {f.feed.map((fee: CompleteFee) => (
         <Fee fee={fee} key={fee.id} />
       ))}
     </ul>
@@ -25,6 +25,7 @@ export default function FeeList({ feed }: { feed: CompleteFee[] }) {
 }
 
 const Fee = ({ fee }: { fee: CompleteFee }) => {
+  console.log(fee)
   return (
     <li className="flex justify-between my-2">
       <div className="w-full">

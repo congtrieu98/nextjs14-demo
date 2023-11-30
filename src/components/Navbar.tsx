@@ -26,6 +26,7 @@ export default async function Navbar() {
           <Link href="/" className="hover:opacity-75">Logo</Link>
           <Link href="/posts" className="hover:opacity-75">Post</Link>
           <Link href="/feed" className="hover:opacity-75">Feed</Link>
+          <Link href="/user" className="hover:opacity-75">User</Link>
           <Link className="hover:opacity-75" href="https://nextjs14-demo-taupe.vercel.app/">Vercel</Link>
           <Link className="hover:opacity-75" href="https://github.com/congtrieu98/nextjs14-demo">Github</Link>
         </h1>
