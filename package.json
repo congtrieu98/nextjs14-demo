@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "npx prisma generate"
+    "postinstall": "pnpm dlx prisma generate"
   },
   "dependencies": {
     "@auth/core": "^0.18.3",
