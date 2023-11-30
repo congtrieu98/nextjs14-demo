@@ -4,15 +4,18 @@ import { type PostId, postIdSchema } from "@/lib/db/schema/posts";
 
 export const getPosts = async () => {
   const { session } = await getUserAuth();
-  const p = await db.post.findMany({ where: {userId: session?.user.id!}});
+  // @ts-ignore
+  const p = await db.post.findMany({ where: { userId: session?.user.id! } });
   return { posts: p };
 };
 
 export const getPostById = async (id: PostId) => {
   const { session } = await getUserAuth();
   const { id: postId } = postIdSchema.parse({ id });
+  // @ts-ignore
   const p = await db.post.findFirst({
-    where: { id: postId, userId: session?.user.id!}});
+    where: { id: postId, userId: session?.user.id! }
+  });
   return { posts: p };
 };
 

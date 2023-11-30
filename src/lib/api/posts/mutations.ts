@@ -1,11 +1,11 @@
 import { db } from "@/lib/db/index";
-import { 
-  PostId, 
+import {
+  PostId,
   NewPostParams,
-  UpdatePostParams, 
+  UpdatePostParams,
   updatePostSchema,
-  insertPostSchema, 
-  postIdSchema 
+  insertPostSchema,
+  postIdSchema
 } from "@/lib/db/schema/posts";
 import { getUserAuth } from "@/lib/auth/utils";
 
@@ -13,6 +13,7 @@ export const createPost = async (post: NewPostParams) => {
   const { session } = await getUserAuth();
   const newPost = insertPostSchema.parse({ ...post, userId: session?.user.id! });
   try {
+    // @ts-ignore
     const p = await db.post.create({ data: newPost });
     return { post: p };
   } catch (err) {
@@ -28,7 +29,7 @@ export const updatePost = async (id: PostId, post: UpdatePostParams) => {
   const newPost = updatePostSchema.parse({ ...post, userId: session?.user.id! });
   try {
     // @ts-ignore
-    const p = await db.post.update({ where: { id: postId, userId: session?.user.id! }, data: newPost})
+    const p = await db.post.update({ where: { id: postId, userId: session?.user.id! }, data: newPost })
     return { post: p };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -42,7 +43,7 @@ export const deletePost = async (id: PostId) => {
   const { id: postId } = postIdSchema.parse({ id });
   try {
     // @ts-ignore
-    const p = await db.post.delete({ where: { id: postId, userId: session?.user.id! }})
+    const p = await db.post.delete({ where: { id: postId, userId: session?.user.id! } })
     return { post: p };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
