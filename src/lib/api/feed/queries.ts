@@ -12,6 +12,7 @@ export const getFees = async () => {
 export const getFeeById = async (id: FeeId) => {
   const { session } = await getUserAuth();
   const { id: feeId } = feeIdSchema.parse({ id });
+  // @ts-ignore
   const f = await db.fee.findFirst({
     where: { id: feeId, userId: session?.user.id! }
   });
